@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "test_framework"
+version = "0.1.0"
+description = "Test framework with pytest, requests, playwright, and allure"
+requires-python = ">=3.11"
+dependencies = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-playwright>=0.5",
+    "allure-pytest>=2.13",
+    "requests>=2.31",
+    "httpx>=0.27",
+    "playwright>=1.44",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "python-dotenv>=1.0",
+    "loguru>=0.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "pre-commit>=3.6",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "-v",
+    "--alluredir=reports/allure",
+    "--clean-alluredir",
+    "--strict-markers",
+    "--tb=short",
+]
+markers = [
+    "smoke: smoke-тесты",
+    "regression: регрессионные тесты",
+    "api: API-тесты",
+    "ui: UI-тесты",
+    "slow: медленные тесты",
+]
+testpaths = ["tests", "api", "ui"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
