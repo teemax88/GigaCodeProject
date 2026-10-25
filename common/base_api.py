@@ -6,7 +6,7 @@ import allure
 import requests
 from loguru import logger
 
-from checks.api.response_checks import ApiResponseChecks
+from api.src.assertions.response_checks import ApiResponseChecks
 from common.decorators import allure_step, log_step
 
 

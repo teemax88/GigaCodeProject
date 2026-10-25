@@ -5,7 +5,7 @@ from __future__ import annotations
 import allure
 
 from api.clients.auth_client import AuthClient
-from checks.api.response_checks import ApiResponseChecks
+from api.src.assertions.response_checks import ApiResponseChecks
 
 
 @allure.epic("Авторизация")

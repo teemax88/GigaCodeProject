@@ -33,7 +33,6 @@ test_framework/
 │   ├── base_api.py              # Базовый класс API-клиента
 │   ├── base_page.py             # Базовый класс Page Object
 │   ├── base_step.py             # Базовый класс шагов
-│   ├── assertions.py            # Кастомные ассерты
 │   ├── decorators.py            # Декораторы (@allure.step, логирование)
 │   └── helpers/
 │       ├── __init__.py
@@ -48,29 +47,35 @@ test_framework/
 ├── data/                        # Тестовые данные
 │   ├── __init__.py
 │   ├── fixtures.json
-│   ├── payloads/
-│   │   ├── __init__.py
-│   │   ├── auth_payloads.py     # Тела запросов авторизации
-│   │   ├── user_payloads.py     # Тела запросов пользователей
-│   │   └── ...
-│   └── endpoints/
+│   └── locators/                # UI локаторы
 │       ├── __init__.py
-│       ├── auth_endpoints.py    # Маршруты авторизации
-│       ├── user_endpoints.py    # Маршруты пользователей
-│       └── ...
+│       ├── auth_locators.py
+│       ├── dashboard_locators.py
+│       └── user_locators.py
 │
 ├── api/                         # API слой
 │   ├── __init__.py
-│   ├── clients/
+│   ├── src/                     # Исходный код API-слоя
 │   │   ├── __init__.py
-│   │   ├── auth_client.py       # Клиент авторизации
-│   │   ├── user_client.py       # Клиент пользователей
-│   │   └── base_client.py       # Базовый API клиент
-│   └── tests/
+│   │   ├── clients/             # API-клиенты
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_client.py   # Клиент авторизации
+│   │   │   └── user_client.py   # Клиент пользователей
+│   │   ├── endpoints/           # Маршруты API
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_endpoints.py
+│   │   │   └── user_endpoints.py
+│   │   ├── payloads/            # Тела запросов
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_payloads.py
+│   │   │   └── user_payloads.py
+│   │   └── assertions/          # Проверки ответов (checks)
+│   │       ├── __init__.py
+│   │       └── response_checks.py
+│   └── tests/                   # API тесты
 │       ├── __init__.py
-│       ├── test_auth.py
-│       ├── test_users.py
-│       └── ...
+│       ├── conftest.py          # Фикстуры для API-тестов
+│       └── test_auth.py
 │
 ├── ui/                          # UI слой
 │   ├── __init__.py
@@ -87,6 +92,7 @@ test_framework/
 │   │   └── ...
 │   └── tests/
 │       ├── __init__.py
+│       ├── conftest.py          # Фикстуры для UI-тестов
 │       ├── test_login.py
 │       ├── test_dashboard.py
 │       └── ...
@@ -179,8 +185,8 @@ def test_...(self, ...):
 
 ## Правила масштабирования
 
-1. **Один маршрут = один файл в `data/endpoints/`**
-2. **Один ресурс = один клиент в `api/clients/`**
+1. **Один маршрут = один файл в `api/src/endpoints/`**
+2. **Один ресурс = один клиент в `api/src/clients/`**
 3. **Одна страница = один Page Object в `ui/pages/`**
 4. **Одна функциональность = один набор steps в `ui/steps/`**
 5. **Одна тестовая область = один файл тестов**

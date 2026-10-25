@@ -7,7 +7,7 @@ from typing import Any
 import allure
 from requests import Response
 
-from checks.api.response_checks import ApiResponseChecks
+from api.src.assertions.response_checks import ApiResponseChecks
 from common.base_api import BaseAPIClient
 from common.decorators import allure_step
 
